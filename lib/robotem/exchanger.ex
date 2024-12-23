@@ -17,8 +17,8 @@ defmodule Robotem.Exchanger do
     # This will subscribe to eventos.publisher
     # TODO, implement connection instead dependency
 
-    state = %{mapper: args[:mapper]}
-    {:consumer, state, [subscribe_to: [Eventos.Publisher]]}
+    state = %{mapper: args[:mapper], subscriptions: Application.get_env(:robotem, :subscriptions)}
+    {:consumer, state, [subscribe_to: state.subscriptions]}
   end
 
   def handle_events(events, _from, state) do
@@ -40,9 +40,6 @@ defmodule Robotem.Exchanger do
   defp handle_event(event, meta_data) do
     case EventRegistry.get_runners(event.event_type) do
       [] ->
-        registered_events =
-          EventRegistry.get_registered_events() |> Enum.map(fn x -> inspect(x) end)
-
         Logger.alert("ignoring  #{event.event_type}. Not registred }")
 
         :ok

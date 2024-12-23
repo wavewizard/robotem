@@ -55,7 +55,7 @@ defmodule Robotem.StatemRunner do
     {:keep_state, state}
   end
 
-  def handle_common(:cast, {:check_last_event, some_val}, data) do
+  def handle_common(:cast, {:check_last_event, _some_val}, _data) do
     IO.puts("Hello")
   end
 
@@ -63,7 +63,7 @@ defmodule Robotem.StatemRunner do
     raise "Intentional crash"
   end
 
-  def handle_common({ref, result}, state) do
+  def handle_common({ref, _result}, state) do
     # result da taskin successful olup olmadigini gorebilirsin
     Process.demonitor(ref, [:flush])
     {event_no, state} = pop_in(state.tasks[ref])
@@ -73,8 +73,8 @@ defmodule Robotem.StatemRunner do
     {:noreply, state}
   end
 
-  def handle_common({:DOWN, ref, _, _, reason}, state) do
-    {seq_no, state} = pop_in(state.tasks[ref])
+  def handle_common({:DOWN, ref, _, _, _reason}, state) do
+    {_seq_no, state} = pop_in(state.tasks[ref])
     {:noreply, state}
   end
 

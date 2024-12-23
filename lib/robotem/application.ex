@@ -11,7 +11,6 @@ defmodule Robotem.Application do
 
     children = [
       # {Robotem.Controller, []},
-      # Robotem.RegistrySupervisor,
       {Task.Supervisor, name: Robotem.TaskSupervisor},
       {DynamicSupervisor, name: Robotem.PoolSupervisor, strategy: :one_for_one},
       # This should be configurable

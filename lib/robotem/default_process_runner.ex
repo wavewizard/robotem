@@ -74,7 +74,7 @@ defmodule Robotem.Runner.Standard do
     {:noreply, state}
   end
 
-  def handle_info({:DOWN, ref, :process, _pid, reason}, state) do
+  def handle_info({:DOWN, ref, :process, _pid, _reason}, state) do
     event_id = Map.get(state.refs, ref)
     handle_task_failure(event_id, state)
   end

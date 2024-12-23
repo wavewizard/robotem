@@ -6,12 +6,12 @@ defmodule Robotem.Test.TestProcess do
     act_on(event, meta_data)
   end
 
-  def act_on(%Robotem.Test.Event.InvoiceAdded{} = e, meta_data) do
+  def act_on(%Robotem.Test.Event.InvoiceAdded{} = e, _meta_data) do
     IO.puts("Test Invoice Added #{inspect(e)}")
     {:ok, :action}
   end
 
-  def act_on(%Robotem.Test.Event.Failed{} = e, meta_data) do
+  def act_on(%Robotem.Test.Event.Failed{} = _e, _meta_data) do
     raise "Process Failed"
   end
 end

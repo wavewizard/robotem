@@ -65,6 +65,6 @@ defmodule Robotem.EventRegistry do
   end
 
   def get_registered_events() do
-    :ets.tab2list(:robotem_event_registry) |> Enum.map(fn {x, y} -> x end) |> List.flatten()
+    :ets.tab2list(:robotem_event_registry) |> Enum.map(fn {x, _y} -> x end) |> List.flatten()
   end
 end

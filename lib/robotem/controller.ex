@@ -14,7 +14,7 @@ defmodule Robotem.Controller do
   end
 
   @impl GenServer
-  def init(args) do
+  def init(_args) do
     Logger.info("#{__MODULE__} started")
     ProcessRegistry.clear_registry()
 
@@ -128,7 +128,7 @@ defmodule Robotem.Controller do
   end
 
   defp clean_registries(runner_pid) do
-    {process, runner} = ProcessRegistry.get_process_module(runner_pid)
+    {process, _runner} = ProcessRegistry.get_process_module(runner_pid)
     ProcessRegistry.remove(process)
     Ereg.remove(runner_pid)
   end

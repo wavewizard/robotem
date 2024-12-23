@@ -1,6 +1,5 @@
 defmodule Robotem do
   alias Robotem.ProcessRegistry
-  alias Robotem.EventRegistry
 
   @moduledoc """
   Documentation for `Robotem`.

@@ -12,8 +12,6 @@ defmodule Robotem.ProcessRegistry do
           started_at: DateTime.t(),
           events_processed: number
         }
-  def start(table_name) do
-  end
 
   def register(runner_pid, process_module, runner_module) do
     Memento.transaction(fn ->
