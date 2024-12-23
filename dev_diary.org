@@ -1,0 +1,14 @@
+* TODO Implement saving robotem processes to a file
+this file should be loaded when application is starting and also when controller crashes
+* TODO Implement Last Processed event, processed events counts
+
+* TODO Implement Robotem.Process behaviour
+
+* TODO Implement ProcessRunner Behaviour
+
+* TODO Implement StatemRunner
+
+* TODO Implement Event Publisher, Subscriber, Dispatcher
+
+
+
