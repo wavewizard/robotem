@@ -1,6 +1,7 @@
-* TODO Implement saving robotem processes to a file
+
+* DONE Implement saving robotem processes to a file
 this file should be loaded when application is starting and also when controller crashes
-* TODO Implement Last Processed event, processed events counts
+* DONE Implement Last Processed event, processed events counts
 
 * TODO Implement Robotem.Process behaviour
 
@@ -9,6 +10,25 @@ this file should be loaded when application is starting and also when controller
 * TODO Implement StatemRunner
 
 * TODO Implement Event Publisher, Subscriber, Dispatcher
+
+
+* What is Robotem
+Robotem is infrastructure level distributed Process Registry and process execution engine.
+
+
+** Components
+Listener -> Listens events from outside world
+Sorter -> Sort incoming events and manages event_track database
+EventTrack Database -> Mnesia table that keeps the record event_type, global_seq basically stores what was the global seq of that event type
+
+*** Sorter
+
+
+** TODO Eger Sorter a unexpected bir event gelirse run time error vermesin ignore etsin
+** TODO Should Ignore already seen events immediately
+
+
+
 
 
 

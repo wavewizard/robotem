@@ -9,10 +9,10 @@ defmodule Robotem do
   Starts and register runner with provided process, return pid of runner process
   """
 
-  @spec register_process(process :: module(), runner :: module()) ::
-          {:ok, pid()} | {:error, term()}
-  def register_process(process, runner) do
-    GenServer.call(Robotem.Controller, {:add, process, runner})
+  @spec register_process(process :: module()) ::
+          :ok | {:error, term()}
+  def register_process(process) do
+    GenServer.cast(Robotem.Controller, {:register, process})
   end
 
   def delete_process(process_name) do

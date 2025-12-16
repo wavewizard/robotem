@@ -33,9 +33,10 @@ defmodule Robotem.EventRegistryTest do
 
   test "add multi" do
     EventRegistry.start(:test_table)
-    EventRegistry.add_multi(:test_table, TestProcess.interested(), 1234)
+    EventRegistry.add_multi(:test_table, Robotem.Test.TestProcess.interested(), 1234)
 
-    events = TestProcess.interested() |> Enum.map(fn x -> {x, 1234} end) |> Enum.reverse()
+    events =
+      Robotem.Test.TestProcess.interested() |> Enum.map(fn x -> {x, 1234} end) |> Enum.reverse()
 
     assert events == :ets.tab2list(:test_table)
   end

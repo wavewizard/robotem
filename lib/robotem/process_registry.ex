@@ -71,7 +71,7 @@ defmodule Robotem.ProcessRegistry do
     result
   end
 
-  def remove(process_module) do
+  def unregister(process_module) do
     Memento.transaction(fn ->
       {:ok, [record]} =
         Memento.transaction(fn ->
@@ -98,6 +98,7 @@ defmodule Robotem.ProcessRegistry do
     end
   end
 
+  @spec can_register?(process_module :: atom()) :: true | false
   def can_register?(process_module) do
     not registered?(process_module)
   end

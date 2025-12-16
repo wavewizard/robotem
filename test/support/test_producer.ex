@@ -1,25 +1,20 @@
 defmodule TestGenerator do
   use GenStage
 
-  def start_link(_args) do
+  def start_link(args) do
+    GenStage.start_link(__MODULE__, args, name: __MODULE__)
   end
 
   def init(_args) do
-    state = []
-    {:producer, state}
+    _state = []
+    {:producer, :ok, dispatcher: GenStage.BroadcastDispatcher}
   end
 
-  def handle_demand(demand, state) when demand > 0 do
-    # Basically state is holding the events and when new events arrive
-    # it will give the number of demand from the events
-    reversed = state |> Enum.reverse()
-    events = reversed |> Enum.take(demand)
-    buffer = reversed |> Enum.drop(demand) |> Enum.reverse()
-    {:noreply, events, buffer}
+  def handle_demand(_demand, state) do
+    {:noreply, [], state}
   end
 
-  def handle_cast({:pust_event, event}, state) do
-    events = [event | state]
-    {:reply, :ok, events}
+  def handle_call({:notify, event}, _from, state) do
+    {:reply, :ok, [event], state}
   end
 end

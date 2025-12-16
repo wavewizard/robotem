@@ -14,6 +14,8 @@ defmodule Robotem.StatemRunner do
   end
 
   def init(args) do
+    # we can spawn a gen_stage consumer here it can forward events to our callback.
+    # it will be our ears.
     state = %{process: args[:process], tasks: %{}, lpen: args[:lpen]}
     # lpen = Keyword.fetch!(args, :lpen)
     # data = %__MODULE__{state: lpen}
