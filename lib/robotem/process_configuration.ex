@@ -1,7 +1,6 @@
 defmodule Robotem.ProcessConfiguration do
   @moduledoc """
   Holds the process definitions.
-  These are the processed that will be spawned.
 
   """
 

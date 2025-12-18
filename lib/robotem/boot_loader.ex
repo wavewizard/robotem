@@ -18,16 +18,53 @@ defmodule Robotem.BootLoader do
   @doc """
   Finds the newly defined process modules by comparing what is stored in ProcessConfiguration List and insert them to ProcessConfiguration
   """
+  # def maybe_add_new_processes() do
+  #   defs = Application.get_env(:robotem, :processes)
+
+  #   def_processes =
+  #     defs
+  #     |> Enum.map(fn {k, v} ->
+  #       {k, v.runner}
+  #     end)
+
+  #   diff = ProcessConfiguration.diff(def_processes)
+
+  #   if Keyword.has_key?(diff, :ins) do
+  #     # We will insert these, but these are just {k,v} so find the definitions
+  #     new_processes = diff[:ins] |> Enum.map(fn {x, _y} -> x end)
+  #     # we will get full definitions from defs
+  #     Enum.reduce(defs, fn {module_name, info} ->
+  #       if module_name in new_processes do
+  #         p = %{
+  #           process_module: module_name,
+  #           runner_module: info.runner,
+  #           process_type: {:source, :process}
+  #         }
+
+  #         Logger.info("Inserting New Process")
+  #         ProcessConfiguration.add(p)
+  #       end
+  #     end)
+  #   end
+  # end
   def maybe_add_new_processes() do
     defs = Application.get_env(:robotem, :processes)
-    def_processes = defs |> Enum.map(fn {proc_module, v} -> {proc_module, v.runner} end)
+
+    def_processes =
+      defs
+      |> Enum.map(fn {k, v} ->
+        {k, v.runner}
+      end)
+
     diff = ProcessConfiguration.diff(def_processes)
 
     if Keyword.has_key?(diff, :ins) do
       # We will insert these, but these are just {k,v} so find the definitions
       new_processes = diff[:ins] |> Enum.map(fn {x, _y} -> x end)
-      # we will get full definitions from defs
-      Enum.reduce(defs, fn {module_name, info} ->
+
+      # Use Enum.each instead of Enum.reduce since we're not accumulating
+      defs
+      |> Enum.each(fn {module_name, info} ->
         if module_name in new_processes do
           p = %{
             process_module: module_name,

@@ -15,7 +15,7 @@ defmodule Robotem.BootLoader.Test do
   end
 
   test "should read processes from config" do
-    configured = Application.get_env(:robote, :processes)
+    configured = Application.get_env(:robotem, :processes)
     assert ^configured = BootLoader.load_definitions_from_config()
   end
 
@@ -24,7 +24,7 @@ defmodule Robotem.BootLoader.Test do
     assert [] == Robotem.ProcessConfiguration.all()
     BootLoader.maybe_add_new_processes()
     :timer.sleep(100)
-    assert [] == Robotem.ProcessConfiguration.all()
+    assert 2 == Robotem.ProcessConfiguration.all() |> Enum.count()
   end
 
   test "compare should give eq, ins, dels" do
@@ -32,8 +32,6 @@ defmodule Robotem.BootLoader.Test do
 
     conf_processes =
       Application.get_env(:robotem, :processes)
-
-    IO.puts("ssss#{inspect(conf_processes)}")
 
     assert Robotem.ProcessConfiguration.all() |> Enum.map(& &1.process_module)
 
@@ -49,7 +47,7 @@ defmodule Robotem.BootLoader.Test do
   test "should return new processes" do
     conf = BootLoader.load_definitions_from_config()
 
-    # lets hav some process registered
+    # lets register some processes
     {:ok, _} =
       Robotem.ProcessConfiguration.add(%{
         process_module: Test2,
@@ -66,7 +64,10 @@ defmodule Robotem.BootLoader.Test do
         process_type: {:source, :process}
       })
 
-    assert 1 == Robotem.BootLoader.find_new_processes(conf)
+    assert [
+             {Robotem.Test.TestProcess, %{runner: :single}},
+             {Robotem.Test.TestProcess2, %{runner: :single}}
+           ] == Robotem.BootLoader.find_new_processes(conf)
   end
 
   test "should insert new processes to configuraiton" do

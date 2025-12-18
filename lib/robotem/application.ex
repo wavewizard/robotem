@@ -7,10 +7,12 @@ defmodule Robotem.Application do
 
   @impl true
   def start(_type, _args) do
-    # Memento.Table.create!(Robotem.ProcessRegistry)
-    # Memento.Table.create!(Robotem.ProcessConfiguration)
-    Robotem.BootLoader.process_config()
-    :ets.new(:robotem_event_registry, [:bag, :public, :named_table])
+    unless Mix.env() == :test do
+      Memento.Table.create!(Robotem.ProcessRegistry)
+      Memento.Table.create!(Robotem.ProcessConfiguration)
+      Robotem.BootLoader.process_config()
+      :ets.new(:robotem_event_registry, [:bag, :public, :named_table])
+    end
 
     children = [
       # {Robotem.Controller, []},
