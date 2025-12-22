@@ -27,7 +27,9 @@ The framework is built around the Decider Pattern:
     Event: A factual record of what happened (e.g., PersonCreated). These are persisted.
 
     Evolve: A pure function that applies an event to the current state to produce a new state.
-''' mermaid
+
+``` mermaid
+
 graph LR
     C[Command] --> D{decide/2};
     S[State] --> D;
@@ -41,7 +43,10 @@ graph LR
     S --> Evolve;
     E --> Evolve;
     Evolve --> S2[New State];
-''''
+
+
+```
+
 Quick Start: Building a Blink Game
 
 Let's model a simple lottery game where players buy slots. This example shows the complete Decider Pattern.
