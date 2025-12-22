@@ -54,7 +54,7 @@ defmodule Blink.Game do
 
   defstruct [:game_id, :slot_price, :total_slots, slots: %{}, status: :open, total_pot: 0]
 
-''' elixir
+```elixir
   # 1. Define Commands (Intentions)
   defcommand CreateGame, [:game_id, :total_slots, :slot_price]
   defcommand PurchaseSlot, [:client_id, :slot_number, :client_balance]
@@ -84,10 +84,15 @@ defmodule Blink.Game do
     %__MODULE__{state | slots: Map.put(state.slots, num, cid)}
   end
 end
-'''
+```
 2. Run Commands Through the DeciderRunner
 
 The Pine.DeciderRunner.DefaultRunner manages the aggregate instance.
+
+``` elixir
+
+
+
 alias Blink.Game
 alias Pine.DeciderRunner.DefaultRunner
 
@@ -105,16 +110,26 @@ case DefaultRunner.execute_cmd(command, MyApp, game_id, metadata) do
   {:error, reason} ->
     IO.puts("Command failed: #{reason}")
 end
-
+```
 3. Query the Current State
+
+``` elixir
+
+
 
 # Get the latest state by replaying all events
 current_state = DefaultRunner.query(MyApp, game_id)
 IO.inspect(current_state.total_pot, label: "Total Pot")
 
+```
+
 Testing Your Domain
 
 Because the core logic is pure functions, testing is straightforward and requires no framework:
+
+``` elixir
+
+
 
 defmodule Blink.GameTest do
   use ExUnit.Case
@@ -132,3 +147,4 @@ defmodule Blink.GameTest do
     assert new_state.slots[1] == "alice"
   end
 end
+```
