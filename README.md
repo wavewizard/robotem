@@ -27,7 +27,7 @@ The framework is built around the Decider Pattern:
     Event: A factual record of what happened (e.g., PersonCreated). These are persisted.
 
     Evolve: A pure function that applies an event to the current state to produce a new state.
-    
+''' mermaid
 graph LR
     C[Command] --> D{decide/2};
     S[State] --> D;
@@ -41,7 +41,7 @@ graph LR
     S --> Evolve;
     E --> Evolve;
     Evolve --> S2[New State];
-    
+''''
 Quick Start: Building a Blink Game
 
 Let's model a simple lottery game where players buy slots. This example shows the complete Decider Pattern.
@@ -54,6 +54,7 @@ defmodule Blink.Game do
 
   defstruct [:game_id, :slot_price, :total_slots, slots: %{}, status: :open, total_pot: 0]
 
+''' elixir
   # 1. Define Commands (Intentions)
   defcommand CreateGame, [:game_id, :total_slots, :slot_price]
   defcommand PurchaseSlot, [:client_id, :slot_number, :client_balance]
@@ -83,7 +84,7 @@ defmodule Blink.Game do
     %__MODULE__{state | slots: Map.put(state.slots, num, cid)}
   end
 end
-
+'''
 2. Run Commands Through the DeciderRunner
 
 The Pine.DeciderRunner.DefaultRunner manages the aggregate instance.
